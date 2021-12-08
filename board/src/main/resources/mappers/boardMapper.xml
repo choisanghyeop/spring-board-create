@@ -44,4 +44,27 @@
 	 where bno = #{bno}
 	</delete>
 
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int" >
+		select count(bno) from tbl_board
+	</select>
+
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+
+		 select *
+		from (
+  		  select row_number() over (order by bno desc) num
+        , a.*
+        from tbl_board a
+        order by bno desc)
+		where num BETWEEN #{displayPost} and #{postNum}
+	</select>
+
+
+
+
+
+
+
 </mapper>
